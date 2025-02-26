@@ -12,6 +12,7 @@ import { SidebarProvider } from "~/components/ui/sidebar";
 import { AppSidebar } from "~/components/app-sidebar";
 import { ThemeProvider } from "./components/theme-provider";
 import NavBar from "./components/NavBar";
+import { ScrollArea } from "./components/ui/scroll-area";
 
 export const links: LinksFunction = () => [
   {
@@ -49,25 +50,26 @@ export function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
           attribute="class"
           defaultTheme="system"
           enableSystem
-          disableTransitionOnChange
-        >
-          {isAuthPage ? (
-            <div>
-              {children}
-            </div>
-          ) : (
-            <SidebarProvider>
-              <AppSidebar />
-              <div className="flex flex-col ml-2 md:ml-0 mr-2 w-full">
-                <NavBar />
-                <div className="border border-zinc-400 rounded-sm h-full mb-2 bg-zinc-50 dark:bg-zinc-950">
-                  {children}
-                </div>
+          disableTransitionOnChange>
+          <ScrollArea className="h-screen w-screen">
+            {isAuthPage ? (
+              <div>
+                {children}
               </div>
-            </SidebarProvider>
-          )}
-          <ScrollRestoration />
-          <Scripts />
+            ) : (
+              <SidebarProvider>
+                <AppSidebar />
+                <div className="flex flex-col ml-2 md:ml-0 mr-2 w-full">
+                  <NavBar />
+                  <div className="border border-zinc-400 rounded-sm h-full mb-2 bg-zinc-50 dark:bg-zinc-950">
+                    {children}
+                  </div>
+                </div>
+              </SidebarProvider>
+            )}
+            <ScrollRestoration />
+            <Scripts />
+          </ScrollArea>
         </ThemeProvider>
       </body>
     </html>

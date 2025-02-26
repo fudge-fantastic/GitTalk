@@ -6,7 +6,7 @@ import { json, Link } from "@remix-run/react"
 import { ModeToggle } from "~/components/darkmodeToggler" 
 import prisma from "./../../prisma/prisma"
 import { setSession } from "~/sessions"
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 export async function action({ request }: { request: Request }) {
   const body = await request.formData();

@@ -8,6 +8,16 @@ type FormInput = {
     githubToken: string;
 };
 
+export async function action({ request }: { request: Request }) {
+    const formData = await request.formData();
+    const repoURL = formData.get("repoURL") as string;
+    const projectName = formData.get("projectName") as string;
+    const githubToken = formData.get("githubToken") as string;
+
+    console.log(repoURL, projectName, githubToken);
+    return { repoURL, projectName, githubToken };
+}
+
 export default function CreateProject() {
     const [formData, setFormData] = useState<FormInput>({
         repoURL: "",

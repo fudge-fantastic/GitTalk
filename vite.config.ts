@@ -21,4 +21,14 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
+  build: {
+    rollupOptions: {
+      external: [
+        "@mapbox/node-pre-gyp",
+        "mock-aws-s3",
+        "aws-sdk",
+        "nock"
+      ],
+    },
+  },
 });
