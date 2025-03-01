@@ -1,9 +1,11 @@
 import {
+  json,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
   useLocation,
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
@@ -13,6 +15,7 @@ import { AppSidebar } from "~/components/app-sidebar";
 import { ThemeProvider } from "./components/theme-provider";
 import NavBar from "./components/NavBar";
 import { ScrollArea } from "./components/ui/scroll-area";
+import { requireUserSession } from "./sessions";
 
 export const links: LinksFunction = () => [
   {
@@ -30,11 +33,27 @@ export const links: LinksFunction = () => [
   },
 ];
 
+// This ensures login and signup remain accessible while protecting everything else.
+export const loader = async ({ request }: { request: Request }) => {
+  const authRoutes = ["/login", "/signup"];
+  const url = new URL(request.url);
+
+  if (authRoutes.includes(url.pathname)) {
+    return json({ user: null });
+  }
+
+  const user = await requireUserSession(request);
+  return json({ user });
+};
+
 export function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
   const location = useLocation();
+  const data = useLoaderData<typeof loader>();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const user = data?.user || null;
+  const authRoutes = ["/login", "/signup"];
 
   // Routes where we don't want sidebar/navbar
-  const authRoutes = ["/login", "/signup"];
   const isAuthPage = authRoutes.includes(location.pathname);
 
   return (

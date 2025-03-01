@@ -20,11 +20,11 @@ const { getSession, commitSession, destroySession } =
       httpOnly: true, // Prevents JavaScript access (security measure)
       // 7 days (session expiration for below)
       // maxAge: 60 * 60 * 24 * 7, 
-      maxAge: 120, // one-twenty seconds for now 
+      maxAge: 60 * 60, // one hour for now 
       path: "/",
       sameSite: "lax", // Helps prevent CSRF attacks
       secrets: [process.env.SESSION_SECRET ?? "default-secret"], // Use env variable in production
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
     },
   });
 

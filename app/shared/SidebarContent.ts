@@ -1,14 +1,15 @@
-import { RxDashboard } from "react-icons/rx";
+import { BsGrid1X2Fill } from "react-icons/bs";
 import { RiRobot2Line } from "react-icons/ri";
 import { IoMdSettings } from "react-icons/io";
-import { GoRepo } from "react-icons/go";
 import { CgSupport } from "react-icons/cg";
+import { FaBoxArchive } from "react-icons/fa6";
+import { LuScreenShare } from "react-icons/lu";
 
 const SidebarItemsGroup1 = [
     {
       title: "Dashboard",
       url: "/dashboard",
-      icon: RxDashboard,
+      icon: BsGrid1X2Fill,
     },
     {
       title: "Q&A",
@@ -16,9 +17,14 @@ const SidebarItemsGroup1 = [
       icon: RiRobot2Line,
     },
     {
-      title: "Repositories",
-      url: "/",
-      icon: GoRepo,
+      title: "Projects",
+      url: "/projects",
+      icon: FaBoxArchive,
+    },
+    {
+      title: "Meetings",
+      url: "/meetings",
+      icon: LuScreenShare,
     }
   ]
 
