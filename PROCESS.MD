@@ -46,7 +46,10 @@ model Project {
 Save and run the following command
 ```shell
 # Run the migration after making changes in the Prisma Schema
-npx prisma migrate dev --name init
+npx prisma migrate dev --name <any_name>
+
+# Reset the database
+npx prisma migrate reset
 
 # Ensure to generate the Prisma Client
 npx prisma generate

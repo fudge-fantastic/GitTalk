@@ -1,35 +1,59 @@
-const projectItems = [
-    {
-        id: 1,
-        name: "Project 1",
-        url: "https://github.com",
-        description: "This is project 1 description, and it is very long. What do you think?",
-    }, {
-        id: 1,
-        name: "Project 2",
-        url: "https://github.com",
-        description: "This is project 2 description, and it is very long. What do you think?",
-    }, {
-        id: 1,
-        name: "Project 3",
-        url: "https://github.com",
-        description: "This is project 3 description, and it is very long. What do you think?",
-    },
-]
+import { Link, useLoaderData } from "@remix-run/react";
+import { json, LoaderFunction } from "@remix-run/node";
+import { FaPlus } from "react-icons/fa";
+import { getSession } from "~/sessions";
+import prisma from "prisma/prisma"; 
+import { Project } from "@prisma/client";
+
+export const loader: LoaderFunction = async ({ request }) => {
+    const session = await getSession(request.headers.get("Cookie"));
+    const userId = session.get("userId");
+
+    if (!userId) {
+        return json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    // Fetch projects for the logged-in user
+    try {
+        const projects = await prisma.project.findMany({
+            where: { userId }, 
+        });
+        return json({ projects });
+    } catch (error) {
+        console.error("Error fetching projects:", error);
+        return json({ error: "Failed to fetch projects" }, { status: 500 });
+    }
+};
 
 export default function Projects() {
-    return (
-        <div className="p-3">
-            <div className="flex flex-row gap-4">
-                {projectItems.map((item) => (
-                    <div className="dark:hover:bg-zinc-800 flex flex-col p-3 rounded-md bg-zinc-100 dark:bg-zinc-900" key={item.id}>
-                        <h1 className="text-lg font-semibold">{item.name}</h1>
-                        <p className="text-xs">{item.description}</p>
-                    </div>
-                ))}
-                <div>
+    const { projects }: { projects: Project[] } = useLoaderData(); 
 
-                </div>
+    return (
+        <div className="p-2">
+            <div className="grid grid-cols-3 gap-2">
+                {projects?.length > 0 ? (
+                    projects.map((project) => (
+                        <div 
+                            key={project.id} 
+                            className="dark:hover:bg-zinc-800 flex flex-col p-3 rounded-md bg-zinc-100 dark:bg-zinc-900 gap-2"
+                        >
+                            <h1 className="text-lg font-semibold">{project.projectName}</h1>
+                            <p className="text-sm text-zinc-400">{project.description}</p>
+                        </div>
+                    ))
+                ) : (
+                    <p className="text-center text-zinc-500 col-span-3">No projects found.</p>
+                )}
+                <Link 
+                    to="/createproject" 
+                    className="gap-1 flex flex-col items-center justify-center dark:bg-zinc-900 px-3 py-8 rounded-md border-2 border-dashed dark:border-zinc-700 dark:hover:bg-zinc-800"
+                >
+                    <div className="flex items-center">
+                        <h1 className="font-semibold text-md">Create Project</h1>
+                        <FaPlus className="ml-2" />
+                    </div>
+                    <p className="text-xs text-zinc-400">Create a new project and explore the repository</p>
+                </Link>
             </div>
         </div>
     );

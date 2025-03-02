@@ -2,8 +2,7 @@ import { createCookieSessionStorage, redirect } from "@remix-run/node";
 
 type SessionData = {
   userId: number; 
-  userFirstName: string;
-  userLastName: string;
+  userName: string;
   userEmail: string;
 };
 
@@ -29,11 +28,10 @@ const { getSession, commitSession, destroySession } =
   });
 
 // Store user data in session after successful login
-export async function setSession(userId: number, userFirstName: string, userLastName: string, userEmail: string, redirectTo = "/dashboard") {
+export async function setSession(userId: number, userName: string, userEmail: string, redirectTo = "/dashboard") {
   const session = await getSession();
   session.set("userId", userId);
-  session.set("userFirstName", userFirstName);
-  session.set("userLastName", userLastName);
+  session.set("userName", userName);
   session.set("userEmail", userEmail);
 
   return redirect(redirectTo, {

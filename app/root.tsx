@@ -80,7 +80,7 @@ export function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
                 <AppSidebar />
                 <div className="flex flex-col ml-2 md:ml-0 mr-2 w-full">
                   <NavBar />
-                  <div className="border border-zinc-400 rounded-sm h-full mb-2 bg-zinc-50 dark:bg-zinc-950">
+                  <div className="border border-zinc-700 rounded-md h-full mb-2 bg-zinc-50 dark:bg-zinc-950">
                     {children}
                   </div>
                 </div>

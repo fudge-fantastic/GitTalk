@@ -40,7 +40,7 @@ function SideBarHeader() {
           <h1 className="text-lg font-bold">GitTalk</h1>
         </Link>
       </SidebarHeader>
-      <Separator className="bg-zinc-400 mt-2" />
+      <Separator className="bg-zinc-700 mt-2" />
       <SidebarGroup>
         <SidebarGroupLabel className="text-xs text-zinc-900 dark:text-zinc-200">Main Application</SidebarGroupLabel>
         <SidebarGroupContent>

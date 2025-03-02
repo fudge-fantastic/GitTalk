@@ -33,7 +33,7 @@ export async function action({ request }: { request: Request }) {
     return json({ error: "Incorrect Password" }, { status: 401 });
   }
 
-  return setSession(user.id, user.firstName, user.lastName, user.email);
+  return setSession(user.id, user.username, user.email);
 }
 
 export default function LoginPage() {
