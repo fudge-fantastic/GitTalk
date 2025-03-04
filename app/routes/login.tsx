@@ -33,7 +33,7 @@ export async function action({ request }: { request: Request }) {
     return json({ error: "Incorrect Password" }, { status: 401 });
   }
 
-  return setSession(user.id, user.username, user.email);
+  return setSession(user.id, user.userName, user.email);
 }
 
 export default function LoginPage() {
@@ -46,11 +46,9 @@ export default function LoginPage() {
         </Link>
         <ModeToggle />
       </div>
-      <div>
         <div className="flex flex-row items-center justify-center mt-10">
           <LoginForm />
         </div>
-      </div>
     </div>
   )
 }
