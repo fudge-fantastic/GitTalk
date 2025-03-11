@@ -9,7 +9,7 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div className="p-4">
+    <div className="dark:bg-zinc-800">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis ratione quasi sunt voluptatum nemo consequuntur iure beatae nulla, libero tenetur. Eligendi, nesciunt nobis placeat labore illum tenetur consectetur rerum nostrum?
     </div>
   );

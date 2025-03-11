@@ -19,7 +19,7 @@ import { GalleryVerticalEnd } from "lucide-react";
 
 export function AppSidebar() {
   return (
-    <Sidebar collapsible="icon" className="p-2">
+    <Sidebar>
       <SideBarHeader />
       <SidebarContent>
       </SidebarContent>
@@ -34,13 +34,13 @@ function SideBarHeader() {
   const location = useLocation();
   return (
     <>
-      <SidebarHeader className="flex flex-row items-center gap-[7px] mx-1.5 mt-1">
+      <SidebarHeader className="flex flex-row items-center gap-[7px] mx-1.5 mt-2">
         <Link to="/" className="flex flex-row items-center gap-[7px]">
           <GalleryVerticalEnd />
-          <h1 className="text-lg font-bold">GitTalk</h1>
+          <h1 className="text-xl font-semibold tracking-wide">GitTalk</h1>
         </Link>
       </SidebarHeader>
-      <Separator className="bg-zinc-700 mt-2" />
+      <Separator className="bg-zinc-700 mt-2.5" />
       <SidebarGroup>
         <SidebarGroupLabel className="text-xs text-zinc-900 dark:text-zinc-200">Main Application</SidebarGroupLabel>
         <SidebarGroupContent>

@@ -28,13 +28,13 @@ export default function Projects() {
     const { projects }: { projects: Project[] } = useLoaderData();
 
     return (
-        <div className="p-2">
+        <div>
             <div className="grid grid-cols-3 gap-2">
                 {projects?.length > 0 ? (
                     projects.map((project) => (
                         <Link to={`/projects/${project.id}`}
                             key={project.id}
-                            className="dark:hover:bg-zinc-800 flex flex-col p-3 rounded-md bg-zinc-100 dark:bg-zinc-900 gap-2 duration-150"
+                            className="dark:hover:bg-zinc-800 flex flex-col p-3 rounded-sm bg-zinc-100 dark:bg-zinc-900 gap-2 duration-150"
                         >
                             <h1 className="text-lg font-semibold">{project.projectName}</h1>
                             <p className="text-sm text-zinc-400">{project.description}</p>

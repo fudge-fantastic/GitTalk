@@ -4,8 +4,8 @@ import { UserBadge } from "./UserBadge";
 
 export default function NavBar() {
     return (
-        <div className="my-2 rounded-sm flex flex-row justify-between items-center">
-            <Input placeholder="Search..." className="bg-zinc-100 w-[30%] dark:bg-zinc-800 h-8" />
+        <div className=" mx-2 mt-2 rounded-sm flex flex-row justify-between items-center">
+            <Input placeholder="Search..." className="bg-zinc-100 w-[30%] dark:bg-zinc-900 h-8 rounded-sm" />
             <div className="flex flex-row gap-2 items-center">
                 <UserBadge />
                 <ModeToggle />
