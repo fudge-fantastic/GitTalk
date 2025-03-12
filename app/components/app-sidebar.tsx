@@ -7,6 +7,7 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
   // SidebarMenuForProjects,
@@ -15,7 +16,8 @@ import {
 import { SidebarItemsGroup1 } from "~/shared/SidebarContent"
 import { Link, useLocation } from "@remix-run/react";
 import { Separator } from "./ui/separator";
-import { GalleryVerticalEnd } from "lucide-react";
+import { GalleryVerticalEnd, Home, MoreHorizontal } from "lucide-react";
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 
 export function AppSidebar() {
   return (
@@ -53,7 +55,7 @@ function SideBarHeader() {
                     <Link
                       to={item.url}
                       className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${isActive
-                        ? "hover:bg-zinc-900 hover:text-white bg-zinc-900 dark:bg-zinc-800 text-white dark:text-white font-semibold"
+                        ? "hover:bg-zinc-900 hover:text-white bg-zinc-900 dark:bg-zinc-900 text-white dark:text-white font-semibold"
                         : "dark:hover:bg-zinc-900 text-zinc-900 dark:text-white font-semibold"
                         }`}
                     >
@@ -77,11 +79,40 @@ function SideBarFooter() {
       <SidebarGroup>
         {/* <SidebarGroupLabel className="text-xs text-zinc-900 dark:text-zinc-200">Help & Support</SidebarGroupLabel> */}
         <SidebarGroupContent>
-          <div className="dark:bg-zinc-900 p-2 rounded-md bg-zinc-100 border border-zinc-300 dark:border-none">
+          <div className="dark:bg-zinc-900 p-2 rounded-sm bg-zinc-100 border border-zinc-300 dark:border-none">
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Lorem ipsum dolor sit amet consectetur, adipisicing elit.
           </div>
         </SidebarGroupContent>
       </SidebarGroup>
     </SidebarFooter>
+  )
+}
+
+
+function unUsed() {
+  return (
+    <SidebarMenuItem>
+      <SidebarMenuButton asChild>
+        <a href="/">
+          <Home />
+          <span>Home</span>
+        </a>
+      </SidebarMenuButton>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <SidebarMenuAction>
+            <MoreHorizontal />
+          </SidebarMenuAction>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent side="right" align="start">
+          <DropdownMenuItem>
+            <span>Edit Project</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <span>Delete Project</span>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </SidebarMenuItem>
   )
 }

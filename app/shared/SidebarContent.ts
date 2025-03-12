@@ -17,14 +17,14 @@ const SidebarItemsGroup1 = [
       icon: RiRobot2Line,
     },
     {
-      title: "Projects",
-      url: "/projects",
-      icon: FaBoxArchive,
-    },
-    {
       title: "Meetings",
       url: "/meetings",
       icon: LuScreenShare,
+    },
+    {
+      title: "Projects",
+      url: "/projects",
+      icon: FaBoxArchive,
     }
   ]
 
