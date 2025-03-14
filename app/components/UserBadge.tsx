@@ -18,7 +18,7 @@ export function UserBadge() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className=" font-semibold px-2.5 py-1.5 text-sm rounded-md dark:bg-zinc-800 dark:hover:bg-zinc-700 outline-none shadow-md bg-zinc-50 hover:bg-zinc-100">BS</button>
+        <button className=" font-semibold px-2 py-1.5 text-sm rounded-md shadow-sm hover:shadow-md shadow-zinc-400 hover:shadow-zinc-400 dark:bg-zinc-900 dark:hover:border-zinc-700 dark:border dark:shadow-none duration-150">BS</button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>

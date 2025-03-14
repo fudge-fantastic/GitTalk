@@ -2,7 +2,6 @@ import { BsGrid1X2Fill } from "react-icons/bs";
 import { RiRobot2Line } from "react-icons/ri";
 import { IoMdSettings } from "react-icons/io";
 import { CgSupport } from "react-icons/cg";
-import { FaBoxArchive } from "react-icons/fa6";
 import { LuScreenShare } from "react-icons/lu";
 
 const SidebarItemsGroup1 = [
@@ -20,11 +19,6 @@ const SidebarItemsGroup1 = [
       title: "Meetings",
       url: "/meetings",
       icon: LuScreenShare,
-    },
-    {
-      title: "Projects",
-      url: "/projects",
-      icon: FaBoxArchive,
     }
   ]
 

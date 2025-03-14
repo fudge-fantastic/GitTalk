@@ -16,6 +16,9 @@ import { ThemeProvider } from "./components/theme-provider";
 import NavBar from "./components/NavBar";
 import { ScrollArea } from "./components/ui/scroll-area";
 import { requireUserSession } from "./sessions";
+import prisma from "prisma/prisma";
+import { Project } from "@prisma/client";
+
 
 export const links: LinksFunction = () => [
   {
@@ -39,11 +42,23 @@ export const loader = async ({ request }: { request: Request }) => {
   const url = new URL(request.url);
 
   if (authRoutes.includes(url.pathname)) {
-    return json({ user: null });
+    return json({ user: null, projects: [] });
   }
 
+  // Getting Authenticated User
   const user = await requireUserSession(request);
-  return json({ user });
+
+  // Fetching Projects of the Authenticated User
+  let projects: Project[] = [];
+  try {
+    projects = await prisma.project.findMany({
+      where: { userId: user.userId },
+    });
+  } catch (error) {
+    console.error("Error fetching projects:", error);
+  }
+
+  return json({ user, projects });
 };
 
 export function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
