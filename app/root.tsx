@@ -95,7 +95,7 @@ export function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
                 <AppSidebar />
                 <div className="flex flex-col w-full">
                   <NavBar />
-                  <div className="m-2 h-full bg-zinc-50 dark:bg-zinc-950">
+                  <div className="m-3 h-full bg-zinc-50 dark:bg-zinc-950">
                     {children}
                   </div>
                 </div>
