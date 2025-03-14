@@ -31,7 +31,7 @@ export async function action({ request }: { request: Request }) {
 export default function CreateProject() {
     return (
         <div className="flex justify-center items-center h-full gap-6 p-3">
-            <div className="md:block hidden md:p-32 dark:bg-zinc-800 bg-zinc-200 rounded-md shadow-lg">PlaceHolder</div>
+            <div className="md:block hidden md:p-32 dark:bg-zinc-900 bg-zinc-200 rounded-md shadow-lg">PlaceHolder</div>
             <div>
                 <h1 className="text-xl text-zinc-800 dark:text-zinc-200 font-bold">Link your GitHub repository here!</h1>
                 <p className="text-zinc-500 dark:text-zinc-400 text-xs">Enter your GitHub repository details below!</p>
@@ -41,14 +41,14 @@ export default function CreateProject() {
                             required
                             name="projectName"
                             placeholder="Project Name"
-                            className="bg-zinc-100 dark:bg-zinc-800 h-7.5 mb-2 text-sm"
+                            className="bg-zinc-100 dark:bg-zinc-900 h-7.5 mb-2 text-sm"
                         />
                         <Input
                             required
                             name="repoURL"
                             type="url"
                             placeholder="Repository URL"
-                            className="bg-zinc-100 dark:bg-zinc-800 h-7.5 mb-2 text-sm"
+                            className="bg-zinc-100 dark:bg-zinc-900 h-7.5 mb-2 text-sm"
                         />
 
                         <Input
@@ -56,15 +56,15 @@ export default function CreateProject() {
                             name="githubToken"
                             type="password"
                             placeholder="GitHub Token (Optional)"
-                            className="bg-zinc-100 dark:bg-zinc-800 h-7.5 mb-2 text-sm"
+                            className="bg-zinc-100 dark:bg-zinc-900 h-7.5 mb-2 text-sm"
                         />
 
                         <Textarea
                             placeholder="Description (Optional)"
-                            className="bg-zinc-100 dark:bg-zinc-800 h-28 mb-2 text-sm"
+                            className="bg-zinc-100 dark:bg-zinc-900 h-28 mb-2 text-sm"
                             name="description"
                         />
-                        <button type="submit" className="font-semibold px-3 py-1.5 text-[12px] rounded-md outline-none shadow-md bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 transition-colors">
+                        <button type="submit" className="font-semibold px-3 py-1.5 text-[12px] rounded-md outline-none shadow-sm hover:shadow-md dark:shadow-none shadow-zinc-400 hover:shadow-zinc-400 dark:bg-zinc-900 dark:hover:bg-zinc-800 transition-colors">
                             Submit
                         </button>
                     </Form>
