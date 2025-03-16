@@ -1,1 +1,17 @@
-1. Use Outlet for the Projects!
+- ✅ Project initialisation
+- ❌ Setup NeonDB
+- ✅ Setup Shadcn
+- ❌ Setup Clerk
+- ✅ Building layout and sidebar
+- ✅ Create project page
+- ✅ Build dashboard page
+- ➖ Build commit log component
+- ❌ Build question card component
+- ❌ GitHub RAG pipeline explanation
+- ❌ Implement GitHub repo RAG
+- ❌ Build Q&A page
+- ❌ Setup meeting card & firebase
+- ❌ Setup AssemblyAI
+- ❌ Archive project & Invite members
+- ❌ Setup Stripe
+- ❌ Deploy to Vercel!

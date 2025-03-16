@@ -1,75 +1,77 @@
 /* eslint-disable import/no-unresolved */
+import { useState } from "react"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  // DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  // DropdownMenuSub,
-  // DropdownMenuSubContent,
-  // DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "~/components/ui/dialog"
+import { Form } from "@remix-run/react"
+
+const dropDownItems1 = ["Profile", "Billing", "Settings"]
+const dropDownItems2 = ["Support", "Logout"]
 
 export function UserBadge() {
+  const [open, setOpen] = useState(false)
+
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <button className="font-semibold px-2 py-1.5 text-sm rounded-full shadow-sm hover:shadow-md shadow-zinc-400 hover:shadow-zinc-400 dark:bg-zinc-900 dark:hover:border-zinc-700 border dark:shadow-none duration-150">BS</button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            Profile
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Billing
-            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            Settings
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          {/* <DropdownMenuItem>
-            Keyboard shortcuts
-            <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
-          </DropdownMenuItem> */}
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        {/* <DropdownMenuGroup>
-          <DropdownMenuItem>Team</DropdownMenuItem>
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-            <DropdownMenuPortal>
-              <DropdownMenuSubContent>
-                <DropdownMenuItem>Email</DropdownMenuItem>
-                <DropdownMenuItem>Message</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>More...</DropdownMenuItem>
-              </DropdownMenuSubContent>
-            </DropdownMenuPortal>
-          </DropdownMenuSub>
-          <DropdownMenuItem>
-            New Team
-            <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator /> */}
-        <DropdownMenuItem>GitHub</DropdownMenuItem>
-        <DropdownMenuItem>Support</DropdownMenuItem>
-        <DropdownMenuItem disabled>API</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          Log out
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button className="font-semibold px-2 py-1.5 text-sm rounded-full shadow-sm hover:shadow-md shadow-zinc-400 hover:shadow-zinc-400 dark:bg-zinc-900 dark:hover:border-zinc-700 border dark:shadow-none duration-150">BS</button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-48">
+          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuGroup>
+            {dropDownItems1.map((item, index) => (
+              <DropdownMenuItem className="cursor-pointer hover:dark:bg-zinc-900" key={index}>
+                {item}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
+          <DropdownMenuGroup>
+            {dropDownItems2.map((item, index) =>
+              item === "Logout" ? (
+                <DropdownMenuItem
+                  key={index}
+                  className="cursor-pointer"
+                  onSelect={() => setOpen(true)}
+                >
+                  {item}
+                </DropdownMenuItem>
+              ) : (
+                <DropdownMenuItem className="cursor-pointer hover:dark:bg-zinc-900" key={index}>
+                  {item}
+                </DropdownMenuItem>
+              )
+            )}
+          </DropdownMenuGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      {/* Logout Confirmation Dialog */}
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Are you sure?</DialogTitle>
+            <DialogDescription>
+              This will log you out of your account.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-end gap-3 mt-1">
+            <button className="px-2 py-0.5 text-xs shadow-sm dark:shadow-none hover:shadow-md shadow-zinc-400 hover:shadow-zinc-400 dark:bg-zinc-800 border dark:hover:border-zinc-700 rounded-md font-semibold duration-150" onClick={() => setOpen(false)}>Cancel</button>
+            <Form method="post" action="/logout">
+              <button type="submit" className="px-3 py-2 text-xs font-semibold bg-red-600 shadow-sm hover:shadow-md hover:shadow-red-500 shadow-red-500 text-white rounded-md duration-150">Logout</button>
+            </Form>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   )
 }
