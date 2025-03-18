@@ -1,8 +1,15 @@
 import { Octokit } from "octokit";
-import prisma from "./prisma.js";
+import prisma from "../../prisma/prisma.js";
 
 // eslint-disable-next-line no-undef
 export const octokit = new Octokit({auth: process.env.GITHUB_TOKEN});
+
+if (!octokit) {
+    throw new Error("GitHub token not found.");
+} else {
+    console.log("GitHub token found.");
+}
+
 export const getFullCommitData = async (githubUrl) => {
     try {
         // eslint-disable-next-line no-useless-escape
@@ -16,7 +23,7 @@ export const getFullCommitData = async (githubUrl) => {
         const { data } = await octokit.rest.repos.listCommits({ owner, repo });
 
         // Sort commits by date (newest first) using committer or fallback to author date
-        const sortedCommits = data.sort(
+        const sortedCommits = data.toSorted(
             (a, b) => new Date(b.commit.committer?.date || b.commit.author?.date) -
                       new Date(a.commit.committer?.date || a.commit.author?.date)
         );

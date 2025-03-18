@@ -52,7 +52,7 @@ export const loader = async ({ request }: { request: Request }) => {
   let projects: Project[] = [];
   try {
     projects = await prisma.project.findMany({
-      where: { userId: user.userId },
+      where: { userId: user.userId as unknown as string },
     });
   } catch (error) {
     console.error("Error fetching projects:", error);

@@ -8,7 +8,7 @@ import { FiUpload } from "react-icons/fi";
 export default function ProjectDetail() {
     const { id } = useParams();
     const { projects }: { projects: Project[] } = useOutletContext();
-    const project = projects.find((p) => p.id === Number(id));
+    const project = projects.find((p) => p.id === String(id));
 
     if (!project) {
         return <p className="text-center text-zinc-500">Project not found.</p>;
