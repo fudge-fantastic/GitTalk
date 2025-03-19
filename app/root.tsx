@@ -17,8 +17,26 @@ import NavBar from "./components/NavBar";
 import { ScrollArea } from "./components/ui/scroll-area";
 import { requireUserSession } from "./sessions";
 import prisma from "prisma/prisma";
-import { Project } from "@prisma/client";
 
+export interface Project {
+    id: string;
+    projectName: string;
+    url: string;
+    description: string | null;
+    githubToken: string | null;
+    userId: string;
+    createdAt: Date;
+    commits: Commit[]; // Add this line
+}
+
+export interface Commit {
+  commitHash: string;
+  commitMessage: string;
+  commitAuthorName: string;
+  commitAuthorAvatar: string;
+  commitDate: string;
+  summary: string;
+}
 
 export const links: LinksFunction = () => [
   {
@@ -53,6 +71,7 @@ export const loader = async ({ request }: { request: Request }) => {
   try {
     projects = await prisma.project.findMany({
       where: { userId: user.userId as unknown as string },
+      include: { commits: true },
     });
   } catch (error) {
     console.error("Error fetching projects:", error);

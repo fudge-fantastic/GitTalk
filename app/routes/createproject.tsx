@@ -3,6 +3,7 @@ import { createProject } from "prisma/queries";
 import { Input } from "~/components/ui/input";
 import { getSession } from "~/sessions";
 import { Textarea } from "~/components/ui/textarea"
+import { pollCommits } from "~/lib/github";
 
 export async function action({ request }: { request: Request }) {
     const formData = await request.formData();
@@ -15,19 +16,25 @@ export async function action({ request }: { request: Request }) {
     // Obtaining userID from the session
     const session = await getSession(request.headers.get("Cookie"));
     const userId = session.get("userId");
-
-    if (!userId) {
-        return json({ error: "Unauthorized" }, { status: 401 });
-    }
-
+  
+    if (!userId) {return json({ error: "Unauthorized" }, { status: 401 });}
+  
     try {
-        await createProject(userId, projectName, repoURL, description, githubToken);
-        return redirect("/projects");
+      // Create the project in the database.
+      const project = await createProject(userId, projectName, repoURL, description, githubToken);
+  
+      // Trigger pollCommits in the background. Any errors are logged but won't block the redirect, Fire-and-forget (asynchronous processing)
+      pollCommits(project.id).catch((err) =>
+        console.error("Poll commits error:", err)
+      );
+  
+      // Immediately redirect the user.
+      return redirect(`/projects/${project.id}`);
     } catch (error) {
-        return json({ error: "Error creating project" }, { status: 500 });
+      return json({ error: "Error creating project" }, { status: 500 });
     }
-}
-
+  }
+  
 export default function CreateProject() {
     return (
         <div className="flex justify-center items-center h-full gap-6 p-3">

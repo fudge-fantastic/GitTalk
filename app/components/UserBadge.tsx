@@ -10,19 +10,41 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "~/components/ui/dialog"
-import { Form } from "@remix-run/react"
+import { Form, useLoaderData } from "@remix-run/react"
 
 const dropDownItems1 = ["Profile", "Billing", "Settings"]
 const dropDownItems2 = ["Support", "Logout"]
 
+export function getInitials(name: string) {
+  if (!name) return "";
+  const nameParts = name.trim().split(" ");
+
+  // If there's only one word, take the first letter
+  if (nameParts.length === 1) {return nameParts[0][0].toUpperCase();}
+
+  // Otherwise, take the first letter of the first and last words
+  return (nameParts[0][0] + nameParts[nameParts.length - 1][0]).toUpperCase();
+}
+
+interface UserData {
+  user: {
+    userId: string;
+    userName: string;
+    userEmail: string;
+  };
+}
+
 export function UserBadge() {
   const [open, setOpen] = useState(false)
+  const userData = useLoaderData<UserData>(); 
+  const initials = getInitials(userData.user?.userName || ""); 
+  const userButtonStyle = "font-semibold px-3 py-1.5 text-sm rounded-full shadow-sm hover:shadow-md shadow-zinc-400 hover:shadow-zinc-400 dark:bg-zinc-900 dark:hover:border-zinc-700 border dark:shadow-none duration-150"
 
   return (
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="font-semibold px-2 py-1.5 text-sm rounded-full shadow-sm hover:shadow-md shadow-zinc-400 hover:shadow-zinc-400 dark:bg-zinc-900 dark:hover:border-zinc-700 border dark:shadow-none duration-150">BS</button>
+          <button className={userButtonStyle}>{initials}</button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-48">
           <DropdownMenuLabel>My Account</DropdownMenuLabel>

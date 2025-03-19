@@ -1,6 +1,6 @@
 import { createCookieSessionStorage, redirect } from "@remix-run/node";
 
-type SessionData = {
+export type SessionData = {
   userId: number; 
   userName: string;
   userEmail: string;

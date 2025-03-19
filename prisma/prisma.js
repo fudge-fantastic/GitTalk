@@ -5,8 +5,8 @@ export default prisma;
 async function main() {
   const users = await prisma.user.findMany();
   const projects = await prisma.project.findMany();
-  console.log("All Users:", users);
-  console.log("All Projects:", projects);
+  const commits = await prisma.commit.findMany();
+  console.log({ users, projects, commits });
 }
 
 main()
