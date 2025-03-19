@@ -5,6 +5,8 @@ import { PiProjectorScreen } from "react-icons/pi";
 import { FiUpload } from "react-icons/fi";
 import { Project } from "~/root";
 import BeautifiedResponse from "~/components/MarkDownRenderer";
+import { FaCodeCommit } from "react-icons/fa6";
+import { RiDeleteBinLine } from "react-icons/ri";
 
 export default function ProjectDetail() {
     const { id } = useParams();
@@ -17,12 +19,15 @@ export default function ProjectDetail() {
     return (
         <div>
             <div className="px-3 py-2 mb-3 bg-white dark:bg-zinc-900 rounded-md shadow-sm shadow-zinc-400 border dark:shadow-none">
-                <div className="flex flex-row items-center gap-2.5">
-                    <BsGithub className="text-4xl" />
-                    <div className="flex flex-col">
-                        <h1 className="text-lg font-semibold text-zinc-800 dark:text-zinc-200">{project.projectName}</h1>
-                        <p className="text-sm">This project is linked to <Link to={project.url} className="hover:underline underline-offset-2 font-semibold">this repository</Link></p>
+                <div className="flex flex-row justify-between items-center">
+                    <div className="flex flex-row items-center gap-2.5">
+                        <BsGithub className="text-3xl" />
+                        <div className="flex flex-row justify-end items-center gap-1">
+                            <h1 className="text-[17px] font-semibold text-zinc-800 dark:text-zinc-200">{project.projectName}</h1>
+                            <p className="text-[13px]">linked to <Link to={project.url} className="hover:underline underline-offset-2 font-semibold">this repository</Link></p>
+                        </div>
                     </div>
+                    <RiDeleteBinLine className="text-lg mr-2" />
                 </div>
             </div>
 
@@ -36,7 +41,7 @@ export default function ProjectDetail() {
                     </div>
                 </div>
                 <div className="text-center p-4 flex flex-col justify-center items-center dark:bg-zinc-900 rounded-md shadow-sm shadow-zinc-400 border dark:shadow-none w-[60%]">
-                    <PiProjectorScreen className="text-5xl"/>
+                    <PiProjectorScreen className="text-5xl" />
                     <p className="font-semibold">Create a new meeting!</p>
                     <p className="text-zinc-500 text-sm text-center">Analyze your meetings with GitTalk <br /> Powered by AI</p>
                     <div className="mt-3">
@@ -47,26 +52,29 @@ export default function ProjectDetail() {
                     </div>
                 </div>
             </div>
-            <div className="dark:bg-zinc-900 my-3 p-4 rounded-md border dark:shadow-none shadow-sm shadow-zinc-400">
-            <div className="w-full">
-                    <h2 className="text-xl font-semibold mb-3">Recent Commits</h2>
+            <div className="my-4 rounded-md dark:shadow-none shadow-sm">
+                <div className="w-full">
+                    <h2 className="flex items-center gap-2 text-xl font-semibold mb-3 ml-0.5">
+                        Recent Commits
+                        <FaCodeCommit />
+                    </h2>
                     {project.commits && project.commits.length > 0 ? (
                         project.commits.map((commit) => (
-                            <div key={commit.commitHash} className="mb-3 p-3 border rounded-md bg-white dark:bg-zinc-900 shadow-sm shadow-zinc-400 dark:shadow-none">
+                            <div key={commit.commitHash} className="mb-3 p-3 border rounded-md bg-white dark:bg-zinc-900 dark:border-zinc-700 shadow-sm shadow-zinc-400 dark:shadow-none">
                                 <div className="flex items-center gap-3">
                                     <img
                                         src={commit.commitAuthorAvatar}
                                         alt="Avatar"
-                                        className="w-10 h-10 rounded-full"
+                                        className="w-12 h-12 rounded-full"
                                     />
                                     <div>
                                         <p className="font-semibold">{commit.commitAuthorName}</p>
-                                        <p className="text-xs text-zinc-500">{new Date(commit.commitDate).toLocaleString()}</p>
+                                        <p className="text-[13px] text-zinc-500">{new Date(commit.commitDate).toLocaleString()}</p>
                                     </div>
                                 </div>
-                                <p className="mt-2 font-medium">{commit.commitMessage}</p>
+                                <p className="mt-2 text-[16px]"><span className="font-semibold">{commit.commitMessage}</span></p>
                                 {commit.summary && (
-                                    <BeautifiedResponse rawText={commit.summary} className="list-disc mt-1 text-sm text-zinc-600 dark:text-zinc-400" />
+                                    <BeautifiedResponse rawText={commit.summary} className="mt-1 text-[13px] text-zinc-700 dark:text-zinc-400" />
                                 )}
                             </div>
                         ))
