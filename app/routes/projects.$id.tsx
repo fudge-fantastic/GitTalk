@@ -1,4 +1,4 @@
-import { Link, useOutletContext, useParams } from "@remix-run/react";
+import { Form, Link, redirect, useOutletContext, useParams } from "@remix-run/react";
 import { BsGithub } from "react-icons/bs";
 import { Textarea } from "~/components/ui/textarea";
 import { PiProjectorScreen } from "react-icons/pi";
@@ -7,15 +7,28 @@ import { Project } from "~/root";
 import BeautifiedResponse from "~/components/MarkDownRenderer";
 import { FaCodeCommit } from "react-icons/fa6";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { useState } from "react";
+import { DialogHeader, Dialog, DialogContent, DialogTitle, DialogDescription } from "~/components/ui/dialog";
+import prisma from "prisma/prisma";
+
+export async function action({ request, params }: { request: Request; params: { id: string } }) {
+    if (request.method.toLowerCase() !== "post") {throw new Response("Method Not Allowed", { status: 405 });}
+    
+    const projectId = params.id;
+    await prisma.project.delete({
+      where: { id: projectId },
+    });
+    return redirect("/projects");
+  }
 
 export default function ProjectDetail() {
     const { id } = useParams();
     const { projects }: { projects: Project[] } = useOutletContext();
     const project = projects.find((p) => p.id === String(id));
+    const [open, setOpen] = useState(false)
 
-    if (!project) {
-        return <p className="text-center text-zinc-500">Project not found.</p>;
-    }
+    if (!project) {return <p className="text-center text-zinc-500">Project not found.</p>;}
+
     return (
         <div>
             <div className="px-3 py-2 mb-3 bg-white dark:bg-zinc-900 rounded-md shadow-sm shadow-zinc-400 border dark:shadow-none">
@@ -27,7 +40,27 @@ export default function ProjectDetail() {
                             <p className="text-[13px]">linked to <Link to={project.url} className="hover:underline underline-offset-2 font-semibold">this repository</Link></p>
                         </div>
                     </div>
-                    <RiDeleteBinLine className="text-lg mr-2" />
+                    <button onClick={() => setOpen(true)} className="p-2 text-xs shadow-sm dark:shadow-none hover:shadow-md shadow-zinc-400 dark:bg-zinc-800 border dark:hover:border-zinc-700 rounded-md font-semibold duration-150">
+                        <RiDeleteBinLine className="text-lg" />
+                    </button>
+                    <Dialog open={open} onOpenChange={setOpen}>
+                        <DialogContent>
+                            <DialogHeader>
+                                <DialogTitle>Are you sure?</DialogTitle>
+                                <DialogDescription>This will delete your project.</DialogDescription>
+                            </DialogHeader>
+                            <div className="flex justify-end gap-3 mt-1">
+                                <button onClick={() => setOpen(false)} className="px-2 py-0.5 text-xs shadow-sm dark:shadow-none hover:shadow-md shadow-zinc-400 dark:bg-zinc-800 border dark:hover:border-zinc-700 rounded-md font-semibold duration-150">
+                                    Cancel
+                                </button>
+                                <Form method="post">
+                                    <button type="submit" className="px-3 py-2 text-xs font-semibold bg-red-600 shadow-sm hover:shadow-md hover:shadow-red-500 shadow-red-500 text-white rounded-md duration-150">
+                                        Delete
+                                    </button>
+                                </Form>
+                            </div>
+                        </DialogContent>
+                    </Dialog>
                 </div>
             </div>
 
@@ -62,11 +95,7 @@ export default function ProjectDetail() {
                         project.commits.map((commit) => (
                             <div key={commit.commitHash} className="mb-3 p-3 border rounded-md bg-white dark:bg-zinc-900 dark:border-zinc-700 shadow-sm shadow-zinc-400 dark:shadow-none">
                                 <div className="flex items-center gap-3">
-                                    <img
-                                        src={commit.commitAuthorAvatar}
-                                        alt="Avatar"
-                                        className="w-12 h-12 rounded-full"
-                                    />
+                                    <img src={commit.commitAuthorAvatar} alt="Avatar" className="w-12 h-12 rounded-full"/>
                                     <div>
                                         <p className="font-semibold">{commit.commitAuthorName}</p>
                                         <p className="text-[13px] text-zinc-500">{new Date(commit.commitDate).toLocaleString()}</p>
@@ -86,5 +115,3 @@ export default function ProjectDetail() {
         </div>
     );
 }
-
-

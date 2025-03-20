@@ -27,8 +27,8 @@ export async function getFullCommitData(githubUrl) {
             new Date(a.commit.committer?.date || a.commit.author?.date)
         );
 
-        // Returning top 12 commits, mapping each to the required fields
-        return sortedCommits.slice(0, 12).map((commit) => ({
+        // Returning top 5 commits, mapping each to the required fields
+        return sortedCommits.slice(0, 5).map((commit) => ({
             commitHash: commit.sha ?? "",
             commitMessage: commit.commit.message ?? "",
             commitAuthorName: commit.commit.author?.name ?? "Unknown",

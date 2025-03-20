@@ -29,7 +29,7 @@ export async function action({ request }: { request: Request }) {
       );
   
       // Immediately redirect the user.
-      return redirect(`/projects`);
+      return redirect(`/projects/${project.id}`);
     } catch (error) {
       return json({ error: "Error creating project" }, { status: 500 });
     }
